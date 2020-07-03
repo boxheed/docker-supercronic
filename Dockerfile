@@ -6,7 +6,7 @@ RUN update-ca-certificates --fresh
 
 RUN install_packages tini
 
-RUN groupadd -r tini && useradd -r -g tini tini
+RUN groupadd -r tini && useradd -m -r -g tini tini
 
 ### SUPERCRONIC
 RUN install_packages curl 

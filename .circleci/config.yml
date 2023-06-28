@@ -1,4 +1,5 @@
-version: 2
+version: 2.1
+
 jobs:
   build:
     working_directory: /app
@@ -37,6 +38,11 @@ jobs:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/app.tar
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker image ls -a
 #      - run:
 #          name: Run tests
 #          command: |
@@ -50,3 +56,12 @@ jobs:
 #              docker tag app "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
 #              docker push "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
 #            fi
+
+workflows:
+  build:
+    jobs:
+      - build:
+          context: boxhead-builds
+          filters:
+            branches:
+              only: /^(?:main|master)$/

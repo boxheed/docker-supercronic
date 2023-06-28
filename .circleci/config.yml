@@ -5,6 +5,7 @@ jobs:
     working_directory: /app
     environment:
       IMAGE_NAME: boxheed/supercronic
+      SUPERCRONIC_VERSION: 0.2.0
     docker:
       - image: docker:24.0.2-git
     steps:
@@ -30,7 +31,7 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build --cache-from=app -t $IMAGE_NAME:latest .
+            docker build --build-arg SUPERCRONIC_VERSION=$SUPERCRONIC_VERSION --cache-from=app -t $IMAGE_NAME:$SUPERCRONIC_VERSION -t $IMAGE_NAME:latest .
       - run:
           name: Save Docker image layer cache
           command: |
@@ -44,7 +45,7 @@ jobs:
           name: Publish Docker Image to Docker Hub
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            docker push $IMAGE_NAME:latest
+            docker push $IMAGE_NAME -a
 
 workflows:
   build:

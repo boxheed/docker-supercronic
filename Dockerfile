@@ -1,5 +1,7 @@
 FROM balenalib/intel-nuc-debian:latest
 
+ARG SUPERCRONIC_VERSION
+
 USER 0
 
 RUN update-ca-certificates --fresh
@@ -11,7 +13,7 @@ RUN groupadd -r tini && useradd -m -r -g tini tini
 ### SUPERCRONIC
 RUN install_packages curl 
 # Latest releases available at https://github.com/aptible/supercronic/releases
-ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.25/supercronic-linux-386 \
+ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v$SUPERCRONIC_VERSION/supercronic-linux-386 \
     SUPERCRONIC=supercronic-linux-386 \
     SUPERCRONIC_SHA1SUM=1b5ebdd122b05cd2ff38b585022f1d909b0146ff
 

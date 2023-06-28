@@ -4,17 +4,17 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: docker:24.0.2-git
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --no-cache \
-              py-pip=9.0.0-r1
-            pip install \
-              docker-compose==1.12.0 
+#      - run:
+#          name: Install dependencies
+#          command: |
+#            apk add --no-cache \
+#              py-pip=9.0.0-r1
+#            pip install \
+#              docker-compose==1.12.0 
       - restore_cache:
           keys:
             - v1-{{ .Branch }}

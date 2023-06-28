@@ -10,9 +10,10 @@ RUN groupadd -r tini && useradd -m -r -g tini tini
 
 ### SUPERCRONIC
 RUN install_packages curl 
-ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.1.9/supercronic-linux-amd64 \
-    SUPERCRONIC=supercronic-linux-amd64 \
-    SUPERCRONIC_SHA1SUM=5ddf8ea26b56d4a7ff6faecdd8966610d5cb9d85
+# Latest releases available at https://github.com/aptible/supercronic/releases
+ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.25/supercronic-linux-386 \
+    SUPERCRONIC=supercronic-linux-386 \
+    SUPERCRONIC_SHA1SUM=1b5ebdd122b05cd2ff38b585022f1d909b0146ff
 
 RUN groupadd -r supercronic && usermod -a -G supercronic tini
 

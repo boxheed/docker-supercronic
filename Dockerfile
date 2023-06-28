@@ -1,6 +1,7 @@
 FROM balenalib/intel-nuc-debian:latest
 
 ARG SUPERCRONIC_VERSION
+ARG SUPERCRONIC_CHECKSUM
 
 USER 0
 
@@ -13,9 +14,9 @@ RUN groupadd -r tini && useradd -m -r -g tini tini
 ### SUPERCRONIC
 RUN install_packages curl 
 # Latest releases available at https://github.com/aptible/supercronic/releases
-ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v$SUPERCRONIC_VERSION/supercronic-linux-386 \
-    SUPERCRONIC=supercronic-linux-386 \
-    SUPERCRONIC_SHA1SUM=1b5ebdd122b05cd2ff38b585022f1d909b0146ff
+ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v$SUPERCRONIC_VERSION/supercronic-linux-amd64 \
+    SUPERCRONIC=supercronic-linux-amd64 \
+    SUPERCRONIC_SHA1SUM=$SUPERCRONIC_CHECKSUM
 
 RUN groupadd -r supercronic && usermod -a -G supercronic tini
 

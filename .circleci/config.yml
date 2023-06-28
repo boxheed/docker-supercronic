@@ -3,6 +3,8 @@ version: 2.1
 jobs:
   build:
     working_directory: /app
+    environment:
+      IMAGE_NAME: boxheed/supercronic
     docker:
       - image: docker:24.0.2-git
     steps:
@@ -24,38 +26,25 @@ jobs:
           name: Load Docker image layer cache
           command: |
             set +o pipefail
-            docker load -i /caches/app.tar | true
+            docker load -i /caches/image_cache.tar | true
       - run:
           name: Build application Docker image
           command: |
-            docker build --cache-from=app -t app .
+            docker build --cache-from=app -t $IMAGE_NAME:latest .
       - run:
           name: Save Docker image layer cache
           command: |
             mkdir -p /caches
-            docker save -o /caches/app.tar app
+            docker save -o /caches/image_cache.tar $IMAGE_NAME:latest
       - save_cache:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
-            - /caches/app.tar
+            - /caches/image_cache.tar
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            docker image ls -a
-#      - run:
-#          name: Run tests
-#          command: |
-#            docker-compose -f ./docker-compose.test.yml up
-#      - deploy:
-#          name: Push application Docker image
-#          command: |
-#            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-#              login="$(aws ecr get-login)"
-#              ${login}
-#              docker tag app "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
-#              docker push "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
-#            fi
+            docker push $IMAGE_NAME:latest
 
 workflows:
   build:

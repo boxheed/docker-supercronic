@@ -1,14 +1,16 @@
 version: 2.1
 
+vars: &globals
+  IMAGE_NAME: boxheed/supercronic
+  SUPERCRONIC_VERSION: 0.2.1
+  SUPERCRONIC_CHECKSUM: d7f4c0886eb85249ad05ed592902fa6865bb9d70
+
 jobs:
   build:
     docker:
       - image: docker:24.0.2-git
     working_directory: ~/repo
-    environment:
-      IMAGE_NAME: boxheed/supercronic
-      SUPERCRONIC_VERSION: 0.2.1
-      SUPERCRONIC_CHECKSUM: d7f4c0886eb85249ad05ed592902fa6865bb9d70
+    environment: *globals
     steps:
       - checkout
       - setup_remote_docker
@@ -16,25 +18,29 @@ jobs:
           keys:
             - v1-{{ .Branch }}
           paths:
-            - /caches/image_cache.tar
+            - /caches/cache.tar
       - run:
           name: Load Docker image layer cache
           command: |
             set +o pipefail
-            docker load -i /caches/image_cache.tar | true
+            docker load -i /caches/cache.tar | true
       - run:
           name: Build application Docker image
           command: |
-            docker build --build-arg SUPERCRONIC_VERSION=$SUPERCRONIC_VERSION --build-arg SUPERCRONIC_CHECKSUM=$SUPERCRONIC_CHECKSUM --cache-from=app -t $IMAGE_NAME:$SUPERCRONIC_VERSION -t $IMAGE_NAME:latest .
+            docker build \
+              --build-arg SUPERCRONIC_VERSION=$SUPERCRONIC_VERSION \
+              --build-arg SUPERCRONIC_CHECKSUM=$SUPERCRONIC_CHECKSUM \
+              --cache-from=$IMAGE_NAME:$SUPERCRONIC_VERSION \
+              -t $IMAGE_NAME:$SUPERCRONIC_VERSION
       - run:
           name: Save Docker image layer cache
           command: |
             mkdir -p /caches
-            docker save -o /caches/image_cache.tar $IMAGE_NAME:latest
+            docker save -o /caches/cache.tar $IMAGE_NAME:$SUPERCRONIC_VERSION
       - save_cache:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
-            - /caches/image_cache.tar
+            - /caches/cache.tar
 
   release:
     docker:
@@ -66,7 +72,12 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build --build-arg SUPERCRONIC_VERSION=$SUPERCRONIC_VERSION --build-arg SUPERCRONIC_CHECKSUM=$SUPERCRONIC_CHECKSUM --cache-from=app -t $IMAGE_NAME:$SUPERCRONIC_VERSION -t $IMAGE_NAME:$SUPERCRONIC_VERSION-$CIRCLE_TAG -t $IMAGE_NAME:latest .
+            docker build \
+              --build-arg SUPERCRONIC_VERSION=$SUPERCRONIC_VERSION \
+              --build-arg SUPERCRONIC_CHECKSUM=$SUPERCRONIC_CHECKSUM \
+              -t $IMAGE_NAME:$SUPERCRONIC_VERSION \
+              -t $IMAGE_NAME:$SUPERCRONIC_VERSION-$CIRCLE_TAG \
+              -t $IMAGE_NAME:latest .
       - run:
           name: Publish Docker Image to Docker Hub
           command: |

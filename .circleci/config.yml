@@ -66,7 +66,7 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build --build-arg SUPERCRONIC_VERSION=$SUPERCRONIC_VERSION --build-arg SUPERCRONIC_CHECKSUM=$SUPERCRONIC_CHECKSUM --cache-from=app -t $IMAGE_NAME:$SUPERCRONIC_VERSION -t $IMAGE_NAME:$SUPERCRONIC_VERSION-CIRCLE_TAG -t $IMAGE_NAME:latest .
+            docker build --build-arg SUPERCRONIC_VERSION=$SUPERCRONIC_VERSION --build-arg SUPERCRONIC_CHECKSUM=$SUPERCRONIC_CHECKSUM --cache-from=app -t $IMAGE_NAME:$SUPERCRONIC_VERSION -t $IMAGE_NAME:$SUPERCRONIC_VERSION-$CIRCLE_TAG -t $IMAGE_NAME:latest .
       - run:
           name: Publish Docker Image to Docker Hub
           command: |

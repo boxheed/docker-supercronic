@@ -44,7 +44,7 @@ jobs:
       - checkout
       - run:
           name: Install autotag
-          command: curl -sL https://git.io/autotag-install | sh --
+          command: curl -sL https://git.io/autotag-install | sh -s -- -b /usr/bin
       - run:
           name: increment version
           command: autotag
@@ -92,4 +92,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^\d+\.\d+\.\d+$/
+              only: /^v\d+\.\d+\.\d+$/

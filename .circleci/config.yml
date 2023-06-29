@@ -63,10 +63,7 @@ jobs:
     docker:
       - image: docker:24.0.2-git
     working_directory: ~/repo
-    environment:
-      IMAGE_NAME: boxheed/supercronic
-      SUPERCRONIC_VERSION: 0.2.1
-      SUPERCRONIC_CHECKSUM: d7f4c0886eb85249ad05ed592902fa6865bb9d70
+    environment: *globals
     steps:
       - checkout
       - setup_remote_docker

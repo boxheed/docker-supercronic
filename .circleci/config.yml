@@ -44,10 +44,10 @@ jobs:
       - checkout
       - run:
           name: Install autotag
-          command: curl -sL https://git.io/autotag-install | sh -s -- -b /usr/bin
+          command: curl -sL https://git.io/autotag-install | sh --
       - run:
           name: increment version
-          command: autotag
+          command: ./bin/autotag
       - run: 
           name: push tags
           command: git push --tags

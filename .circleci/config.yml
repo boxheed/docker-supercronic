@@ -27,11 +27,7 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build \
-              --build-arg SUPERCRONIC_VERSION=$SUPERCRONIC_VERSION \
-              --build-arg SUPERCRONIC_CHECKSUM=$SUPERCRONIC_CHECKSUM \
-              --cache-from=$IMAGE_NAME:$SUPERCRONIC_VERSION \
-              -t $IMAGE_NAME:$SUPERCRONIC_VERSION
+            docker build --build-arg SUPERCRONIC_VERSION=$SUPERCRONIC_VERSION --build-arg SUPERCRONIC_CHECKSUM=$SUPERCRONIC_CHECKSUM --cache-from=$IMAGE_NAME:$SUPERCRONIC_VERSION -t $IMAGE_NAME:$SUPERCRONIC_VERSION
       - run:
           name: Save Docker image layer cache
           command: |

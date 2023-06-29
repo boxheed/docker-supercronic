@@ -2,8 +2,8 @@ version: 2.1
 
 vars: &globals
   IMAGE_NAME: boxheed/supercronic
-  SUPERCRONIC_VERSION: 0.2.23
-  SUPERCRONIC_CHECKSUM: dbed853c06aba2c611bbb1955b2c1667b51dcb0a
+  SUPERCRONIC_VERSION: 0.2.24
+  SUPERCRONIC_CHECKSUM: 6817299e04457e5d6ec4809c72ee13a43e95ba41
 
 jobs:
   build:

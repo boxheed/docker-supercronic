@@ -7,8 +7,8 @@ jobs:
     working_directory: ~/repo
     environment:
       IMAGE_NAME: boxheed/supercronic
-      SUPERCRONIC_VERSION: 0.2.0
-      SUPERCRONIC_CHECKSUM: 1f187c07bd973ff1cf5097a8caacbd1686ece5f1
+      SUPERCRONIC_VERSION: 0.2.1
+      SUPERCRONIC_CHECKSUM: d7f4c0886eb85249ad05ed592902fa6865bb9d70
     steps:
       - checkout
       - setup_remote_docker
@@ -58,8 +58,8 @@ jobs:
     working_directory: ~/repo
     environment:
       IMAGE_NAME: boxheed/supercronic
-      SUPERCRONIC_VERSION: 0.2.0
-      SUPERCRONIC_CHECKSUM: 1f187c07bd973ff1cf5097a8caacbd1686ece5f1
+      SUPERCRONIC_VERSION: 0.2.1
+      SUPERCRONIC_CHECKSUM: d7f4c0886eb85249ad05ed592902fa6865bb9d70
     steps:
       - checkout
       - setup_remote_docker

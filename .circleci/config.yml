@@ -43,14 +43,14 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Install autotag
-        command: curl -sL https://git.io/autotag-install | sh --
+          name: Install autotag
+          command: curl -sL https://git.io/autotag-install | sh --
       - run:
-        name: increment version
-        command: autotag
+          name: increment version
+          command: autotag
       - run: 
-        name: push tags
-        command: git push --tags
+          name: push tags
+          command: git push --tags
 
   publish:
     docker:

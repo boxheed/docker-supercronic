@@ -5,6 +5,11 @@ ARG SUPERCRONIC_CHECKSUM
 
 USER 0
 
+RUN apt-get update \
+  && apt-get dist-upgrade \
+  && apt-get clean \
+  && apt-get autoclean
+
 RUN update-ca-certificates --fresh
 
 RUN install_packages tini

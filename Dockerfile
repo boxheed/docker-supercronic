@@ -1,4 +1,4 @@
-FROM balenalib/intel-nuc-debian:latest
+FROM balenalib/intel-nuc-debian:bookworm
 
 ARG SUPERCRONIC_VERSION
 ARG SUPERCRONIC_CHECKSUM

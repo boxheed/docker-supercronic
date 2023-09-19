@@ -5,10 +5,10 @@ ARG SUPERCRONIC_CHECKSUM
 
 USER 0
 
-RUN apt-get update \
-  && apt-get dist-upgrade \
-  && apt-get clean \
-  && apt-get autoclean
+RUN apt-get update -y \
+  && apt-get dist-upgrade -y \
+  && apt-get clean -y \
+  && apt-get autoclean -y
 
 RUN update-ca-certificates --fresh
 

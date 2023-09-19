@@ -1,4 +1,4 @@
-FROM marketplace.gcr.io/google/debian11:latest
+FROM balenalib/intel-nuc-ubuntu:latest
 
 ARG SUPERCRONIC_VERSION
 ARG SUPERCRONIC_CHECKSUM
